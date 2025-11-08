@@ -7,61 +7,90 @@
   <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
+    /* Base */
+    html, body {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       height: 100%;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    
-    html {
-      height: 100%;
-    }
-    
+
+    /* Pool table background (felt + subtle texture) */
     .gradient-bg {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(180deg, #0f5132 0%, #0b4028 100%);
+      background-image:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 8px),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      min-height: 100vh;
+      padding: 24px;
     }
-    
+
+    /* Table frame to simulate wood rails */
+    .table-frame {
+      background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+      border-radius: 24px;
+      padding: 28px;
+      border: 18px solid #3b2b20; /* wood rail color */
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 6px 18px rgba(255,255,255,0.02);
+    }
+
+    /* Cards & hover */
     .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.28s cubic-bezier(.2,.8,.2,1), box-shadow 0.28s;
     }
-    
-    .card-hover:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-    
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-    
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(2,6,23,0.6); }
+
+    /* Pulsing price */
+    .pulse-animation { animation: pulse 2s infinite; }
     @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
     }
-    
-    .shine {
-      position: relative;
-      overflow: hidden;
-    }
-    
+
+    /* Shine effect for CTA and cards (subtle) */
+    .shine { position: relative; overflow: hidden; }
     .shine::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
+      content: ''; position: absolute; top: 0; left: -120%;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
     }
-    
-    .shine:hover::before {
-      left: 100%;
+    .shine:hover::before { left: 120%; }
+
+    /* Decorative pool ball badges */
+    .ball {
+      position: absolute;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 6px 8px rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      color: #111; font-weight: 700; font-size: 18px;
+    }
+    .ball--top-left { top: 8px; left: 8px; background: radial-gradient(circle at 30% 30%, #fff 0%, #f7f7f7 25%, #ffd27a 26%, #f59e0b 100%); }
+    .ball--bottom-right { bottom: 8px; right: 8px; background: radial-gradient(circle at 30% 30%, #fff 0%, #f7f7f7 25%, #7dd3fc 26%, #06b6d4 100%); }
+
+    /* Header tweaks */
+    header { position: relative; z-index: 2; }
+    #club-name { letter-spacing: 0.6px; }
+    #tagline { opacity: 0.9; margin-top: 6px; }
+
+    /* CTA like chalk piece */
+    #cta-button {
+      background: linear-gradient(180deg, #12b76a 0%, #059669 100%);
+      border: 2px solid rgba(0,0,0,0.12);
+      color: #06161a;
+      box-shadow: 0 10px 30px rgba(3,7,18,0.5);
+    }
+    #cta-button:active { transform: translateY(2px) scale(0.996); }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .ball { width:48px; height:48px; font-size:14px; }
+      #club-name { font-size: 2.4rem; }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -69,25 +98,40 @@
  </head>
  <body class="gradient-bg min-h-full">
   <div class="min-h-full flex flex-col"><!-- Header -->
-   <header class="text-center py-12 px-4">
-    <div class="max-w-4xl mx-auto">
+   <div class="table-frame"> <!-- pool table frame wrapper -->
+    <div class="ball ball--top-left">8</div>
+    <div class="ball ball--bottom-right">2</div>
+<!-- Header -->
+    <header class="text-center py-12 px-4">
+     <div class="max-w-4xl mx-auto">
      <div class="mb-4">
-      <svg class="w-20 h-20 mx-auto" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" stroke="#10b981" stroke-width="3" fill="#1f2937" /> <circle cx="50" cy="50" r="35" fill="#10b981" /> <circle cx="50" cy="50" r="25" fill="#1f2937" /> <circle cx="50" cy="50" r="8" fill="#ffffff" /> <rect x="10" y="48" width="80" height="4" fill="#8b4513" rx="2" />
+      <!-- stylized cue + ball logo -->
+      <svg class="w-24 h-16 mx-auto" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <!-- cue -->
+        <rect x="6" y="34" width="150" height="8" rx="4" fill="#7a4a2b"/>
+        <rect x="152" y="30" width="36" height="16" rx="4" fill="#f3f4f6"/>
+        <!-- cue tip -->
+        <circle cx="188" cy="38" r="6" fill="#b45309"/>
+        <!-- ball -->
+        <circle cx="40" cy="40" r="20" fill="#10b981" stroke="#092018" stroke-width="2"/>
+        <circle cx="40" cy="40" r="8" fill="#fff"/>
       </svg>
      </div>
      <h1 id="club-name" class="text-5xl font-bold mb-4" style="color: #10b981;">Billiards Club Premium</h1>
-     <p id="tagline" class="text-xl" style="color: #e5e7eb;">Không gian chơi bida đẳng cấp - Thiết bị hiện đại</p>
+     <p id="tagline" class="text-xl" style="color: #00bfa5;">Không gian chơi bida đẳng cấp - Thiết bị hiện đại</p>
     </div>
-   </header><!-- Price Banner -->
-   <div class="py-8 px-4" style="background-color: #10b981;">
-    <div class="max-w-4xl mx-auto text-center">
-     <p class="text-lg font-semibold mb-2" style="color: #1f2937;">GIÁ ƯU ĐÃI</p>
-     <p id="price-text" class="text-6xl font-bold pulse-animation" style="color: #ffffff;">30.000đ/giờ</p>
-    </div>
-   </div><!-- Promotions Section -->
+   </header>
+   <!-- end table-frame wrapper will close after footer -->
+<!-- Price Banner -->
+    <div class="py-8 px-4" style="background-color: #10b981;">
+     <div class="max-w-4xl mx-auto text-center">
+      <p class="text-lg font-semibold mb-2" style="color: #1f2937;">GIÁ ƯU ĐÃI</p>
+      <p id="price-text" class="text-6xl font-bold pulse-animation" style="color: #ffffff;">30.000đ/giờ</p>
+     </div>
+    </div><!-- Promotions Section -->
    <section class="py-16 px-4 flex-grow">
     <div class="max-w-6xl mx-auto">
-     <h2 id="promo-title" class="text-4xl font-bold text-center mb-12" style="color: #10b981;">Ưu Đãi Đặc Biệt</h2>
+     <h2 id="promo-title" class="text-4xl font-bold text-center mb-12" style="color: #10b981;">Ưu Đãi Đặc Biệt từ 8/11/2025 đến 01/12/2025</h2>
      <div class="grid md:grid-cols-3 gap-8"><!-- Promo Card 1 -->
       <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
        <div class="mb-6">
@@ -95,7 +139,7 @@
         </svg>
        </div>
        <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">🎉</h3>
-       <p id="promo-1" class="text-lg" style="color: #e5e7eb;">Giảm 20% cho khách hàng mới</p>
+       <p id="promo-1" class="text-lg" style="color: #00bfa5;">Giảm 1 tiếng tiền bàn khi hiến thắng mini game Bắn trúng 3 bi được xếp trên bàn</p>
       </div><!-- Promo Card 2 -->
       <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
        <div class="mb-6">
@@ -103,7 +147,7 @@
         </svg>
        </div>
        <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">🥤</h3>
-       <p id="promo-2" class="text-lg" style="color: #e5e7eb;">Miễn phí nước uống khi chơi</p>
+       <p id="promo-2" class="text-lg" style="color: #00bfa5;">game 9 bi chiến thắng nhân viên Miễn phí nước uống khi chơi</p>
       </div><!-- Promo Card 3 -->
       <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
        <div class="mb-6">
@@ -111,7 +155,7 @@
         </svg>
        </div>
        <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">⏰</h3>
-       <p id="promo-3" class="text-lg" style="color: #e5e7eb;">Tặng 1 giờ khi chơi từ 5 giờ</p>
+       <p id="promo-3" class="text-lg" style="color: #00bfa5;">Tặng 1 bát mì hoặc nước khi chơi từ 5 giờ</p>
       </div>
      </div>
     </div>
@@ -121,25 +165,26 @@
      <h2 class="text-3xl font-bold mb-8" style="color: #10b981;">Liên Hệ Đặt Bàn</h2>
      <div class="grid md:grid-cols-2 gap-6 mb-8">
       <div class="p-6 rounded-xl" style="background-color: #374151;">
-       <p class="text-lg font-semibold mb-2" style="color: #10b981;">📞 Điện Thoại</p>
-       <p id="phone-number" class="text-xl" style="color: #e5e7eb;">0866040470</p>
+       <p class="text-lg font-semibold mb-2" style="color: #00bfa5;">📞 Điện Thoại</p>
+       <p id="phone-number" class="text-xl" style="color: #00bfa5;">0866040470</p>
       </div>
       <div class="p-6 rounded-xl" style="background-color: #374151;">
-       <p class="text-lg font-semibold mb-2" style="color: #10b981;">📍 Địa Chỉ</p>
-       <p id="address" class="text-xl" style="color: #e5e7eb;">Trung Na, Tiên Hội, Đại Từ — gần quán Karaoke Tuấn Phượng</p>
+       <p class="text-lg font-semibold mb-2" style="color: #00bfa5;">📍 Địa Chỉ</p>
+       <p id="address" class="text-xl" style="color: #00bfa5;">Trung Na, Tiên Hội, Đại Từ — gần quán Karaoke Tuấn Phượng</p>
       </div>
      </div><button id="cta-button" class="shine px-12 py-4 rounded-full text-xl font-bold transition-all duration-300 hover:scale-105" style="background-color: #10b981; color: #1f2937;"> Đặt Bàn Ngay </button>
     </div>
    </section><!-- Footer -->
    <footer class="py-6 px-4 text-center" style="background-color: #111827;">
-    <p style="color: #9ca3af;">© 2024 Billiards Club. Mở cửa 9:00 - 23:00 hàng ngày</p>
+    <p style="color: #9ca3af;">© 2024 Billiards Club. Mở cửa 07:00 - 23:00 hàng ngày</p>
    </footer>
+  </div> <!-- close table-frame -->
   </div>
   <script>
     const defaultConfig = {
       background_color: "#1a1a2e",
       surface_color: "#1f2937",
-      text_color: "#e5e7eb",
+      text_color: "#00bfa5",
       primary_action_color: "#10b981",
       secondary_action_color: "#374151",
       font_family: "system-ui, -apple-system, sans-serif",
@@ -147,12 +192,13 @@
       club_name: "Billiards Club Premium",
       tagline: "Không gian chơi bida đẳng cấp - Thiết bị hiện đại",
       price_text: "30.000đ/giờ",
-      promo_title: "Ưu Đãi Đặc Biệt",
-      promo_1: "Giảm 20% cho khách hàng mới",
-      promo_2: "Miễn phí nước uống khi chơi",
-      promo_3: "Tặng 1 giờ khi chơi từ 5 giờ",
+      promo_title: "Ưu Đãi Đặc Biệt từ 8/11/2025 đến 01/12/2025",
+      promo_1: "Giảm 1 tiếng tiền bàn khi hiến thắng mini game Bắn trúng 3 bi được xếp trên bàn",
+      promo_2: "game 9 bi chiến thắng nhân viên Miễn phí nước uống khi chơi",
+      promo_3: "Tặng 1 bát mì hoặc nước khi chơi từ 5 giờ",
       phone_number: "0866040470",
       address: "Trung Na, Tiên Hội, Đại Từ — gần quán Karaoke Tuấn Phượng",
+    
       cta_button: "Đặt Bàn Ngay"
     };
 
@@ -176,7 +222,7 @@
       document.querySelectorAll('[style*="background-color: #374151"]').forEach(el => {
         el.style.backgroundColor = secondaryColor;
       });
-      document.querySelectorAll('[style*="color: #e5e7eb"]').forEach(el => {
+      document.querySelectorAll('[style*="color: #00bfa5"]').forEach(el => {
         el.style.color = textColor;
       });
       document.querySelectorAll('[style*="color: #10b981"]').forEach(el => {
