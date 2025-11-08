@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="vi">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billiards Club</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    
+    html {
+      height: 100%;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .shine:hover::before {
+      left: 100%;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="gradient-bg min-h-full">
+  <div class="min-h-full flex flex-col"><!-- Header -->
+   <header class="text-center py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+     <div class="mb-4">
+      <svg class="w-20 h-20 mx-auto" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" stroke="#10b981" stroke-width="3" fill="#1f2937" /> <circle cx="50" cy="50" r="35" fill="#10b981" /> <circle cx="50" cy="50" r="25" fill="#1f2937" /> <circle cx="50" cy="50" r="8" fill="#ffffff" /> <rect x="10" y="48" width="80" height="4" fill="#8b4513" rx="2" />
+      </svg>
+     </div>
+     <h1 id="club-name" class="text-5xl font-bold mb-4" style="color: #10b981;">Billiards Club Premium</h1>
+     <p id="tagline" class="text-xl" style="color: #e5e7eb;">Không gian chơi bida đẳng cấp - Thiết bị hiện đại</p>
+    </div>
+   </header><!-- Price Banner -->
+   <div class="py-8 px-4" style="background-color: #10b981;">
+    <div class="max-w-4xl mx-auto text-center">
+     <p class="text-lg font-semibold mb-2" style="color: #1f2937;">GIÁ ƯU ĐÃI</p>
+     <p id="price-text" class="text-6xl font-bold pulse-animation" style="color: #ffffff;">30.000đ/giờ</p>
+    </div>
+   </div><!-- Promotions Section -->
+   <section class="py-16 px-4 flex-grow">
+    <div class="max-w-6xl mx-auto">
+     <h2 id="promo-title" class="text-4xl font-bold text-center mb-12" style="color: #10b981;">Ưu Đãi Đặc Biệt</h2>
+     <div class="grid md:grid-cols-3 gap-8"><!-- Promo Card 1 -->
+      <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
+       <div class="mb-6">
+        <svg class="w-16 h-16 mx-auto" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="#10b981" /> <path d="M35 50 L45 60 L65 40" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+       </div>
+       <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">🎉</h3>
+       <p id="promo-1" class="text-lg" style="color: #e5e7eb;">Giảm 20% cho khách hàng mới</p>
+      </div><!-- Promo Card 2 -->
+      <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
+       <div class="mb-6">
+        <svg class="w-16 h-16 mx-auto" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="20" width="40" height="60" rx="5" fill="#10b981" /> <rect x="35" y="30" width="30" height="40" fill="#ffffff" /> <circle cx="50" cy="75" r="3" fill="#ffffff" />
+        </svg>
+       </div>
+       <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">🥤</h3>
+       <p id="promo-2" class="text-lg" style="color: #e5e7eb;">Miễn phí nước uống khi chơi</p>
+      </div><!-- Promo Card 3 -->
+      <div class="card-hover shine rounded-2xl p-8 text-center" style="background-color: #1f2937;">
+       <div class="mb-6">
+        <svg class="w-16 h-16 mx-auto" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 L60 40 L82 43 L66 58 L70 80 L50 69 L30 80 L34 58 L18 43 L40 40 Z" fill="#10b981" />
+        </svg>
+       </div>
+       <h3 class="text-2xl font-bold mb-4" style="color: #10b981;">⏰</h3>
+       <p id="promo-3" class="text-lg" style="color: #e5e7eb;">Tặng 1 giờ khi chơi từ 5 giờ</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section class="py-12 px-4" style="background-color: #1f2937;">
+    <div class="max-w-4xl mx-auto text-center">
+     <h2 class="text-3xl font-bold mb-8" style="color: #10b981;">Liên Hệ Đặt Bàn</h2>
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="p-6 rounded-xl" style="background-color: #374151;">
+       <p class="text-lg font-semibold mb-2" style="color: #10b981;">📞 Điện Thoại</p>
+       <p id="phone-number" class="text-xl" style="color: #e5e7eb;">0866040470</p>
+      </div>
+      <div class="p-6 rounded-xl" style="background-color: #374151;">
+       <p class="text-lg font-semibold mb-2" style="color: #10b981;">📍 Địa Chỉ</p>
+       <p id="address" class="text-xl" style="color: #e5e7eb;">Trung Na, Tiên Hội, Đại Từ — gần quán Karaoke Tuấn Phượng</p>
+      </div>
+     </div><button id="cta-button" class="shine px-12 py-4 rounded-full text-xl font-bold transition-all duration-300 hover:scale-105" style="background-color: #10b981; color: #1f2937;"> Đặt Bàn Ngay </button>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-6 px-4 text-center" style="background-color: #111827;">
+    <p style="color: #9ca3af;">© 2024 Billiards Club. Mở cửa 9:00 - 23:00 hàng ngày</p>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#1a1a2e",
+      surface_color: "#1f2937",
+      text_color: "#e5e7eb",
+      primary_action_color: "#10b981",
+      secondary_action_color: "#374151",
+      font_family: "system-ui, -apple-system, sans-serif",
+      font_size: 16,
+      club_name: "Billiards Club Premium",
+      tagline: "Không gian chơi bida đẳng cấp - Thiết bị hiện đại",
+      price_text: "30.000đ/giờ",
+      promo_title: "Ưu Đãi Đặc Biệt",
+      promo_1: "Giảm 20% cho khách hàng mới",
+      promo_2: "Miễn phí nước uống khi chơi",
+      promo_3: "Tặng 1 giờ khi chơi từ 5 giờ",
+      phone_number: "0866040470",
+      address: "Trung Na, Tiên Hội, Đại Từ — gần quán Karaoke Tuấn Phượng",
+      cta_button: "Đặt Bàn Ngay"
+    };
+
+    async function onConfigChange(config) {
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+      
+      document.querySelector('.gradient-bg').style.background = `linear-gradient(135deg, ${bgColor} 0%, ${surfaceColor} 100%)`;
+      document.querySelectorAll('[style*="background-color: #1f2937"]').forEach(el => {
+        el.style.backgroundColor = surfaceColor;
+      });
+      document.querySelectorAll('[style*="background-color: #374151"]').forEach(el => {
+        el.style.backgroundColor = secondaryColor;
+      });
+      document.querySelectorAll('[style*="color: #e5e7eb"]').forEach(el => {
+        el.style.color = textColor;
+      });
+      document.querySelectorAll('[style*="color: #10b981"]').forEach(el => {
+        el.style.color = primaryColor;
+      });
+      document.querySelectorAll('[style*="background-color: #10b981"]').forEach(el => {
+        el.style.backgroundColor = primaryColor;
+      });
+      document.querySelectorAll('circle[stroke="#10b981"]').forEach(el => {
+        el.setAttribute('stroke', primaryColor);
+      });
+      document.querySelectorAll('circle[fill="#10b981"]').forEach(el => {
+        el.setAttribute('fill', primaryColor);
+      });
+      document.querySelectorAll('rect[fill="#10b981"]').forEach(el => {
+        el.setAttribute('fill', primaryColor);
+      });
+      document.querySelectorAll('path[fill="#10b981"]').forEach(el => {
+        el.setAttribute('fill', primaryColor);
+      });
+      
+      document.getElementById('club-name').textContent = config.club_name || defaultConfig.club_name;
+      document.getElementById('club-name').style.fontSize = `${baseSize * 3.125}px`;
+      
+      document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
+      document.getElementById('tagline').style.fontSize = `${baseSize * 1.25}px`;
+      
+      document.getElementById('price-text').textContent = config.price_text || defaultConfig.price_text;
+      document.getElementById('price-text').style.fontSize = `${baseSize * 3.75}px`;
+      
+      document.getElementById('promo-title').textContent = config.promo_title || defaultConfig.promo_title;
+      document.getElementById('promo-title').style.fontSize = `${baseSize * 2.5}px`;
+      
+      document.getElementById('promo-1').textContent = config.promo_1 || defaultConfig.promo_1;
+      document.getElementById('promo-1').style.fontSize = `${baseSize * 1.125}px`;
+      
+      document.getElementById('promo-2').textContent = config.promo_2 || defaultConfig.promo_2;
+      document.getElementById('promo-2').style.fontSize = `${baseSize * 1.125}px`;
+      
+      document.getElementById('promo-3').textContent = config.promo_3 || defaultConfig.promo_3;
+      document.getElementById('promo-3').style.fontSize = `${baseSize * 1.125}px`;
+      
+      document.getElementById('phone-number').textContent = config.phone_number || defaultConfig.phone_number;
+      document.getElementById('phone-number').style.fontSize = `${baseSize * 1.25}px`;
+      
+      document.getElementById('address').textContent = config.address || defaultConfig.address;
+      document.getElementById('address').style.fontSize = `${baseSize * 1.25}px`;
+      
+      document.getElementById('cta-button').textContent = config.cta_button || defaultConfig.cta_button;
+      document.getElementById('cta-button').style.fontSize = `${baseSize * 1.25}px`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              config.primary_action_color = value;
+              window.elementSdk.setConfig({ primary_action_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              config.secondary_action_color = value;
+              window.elementSdk.setConfig({ secondary_action_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["club_name", config.club_name || defaultConfig.club_name],
+        ["tagline", config.tagline || defaultConfig.tagline],
+        ["price_text", config.price_text || defaultConfig.price_text],
+        ["promo_title", config.promo_title || defaultConfig.promo_title],
+        ["promo_1", config.promo_1 || defaultConfig.promo_1],
+        ["promo_2", config.promo_2 || defaultConfig.promo_2],
+        ["promo_3", config.promo_3 || defaultConfig.promo_3],
+        ["phone_number", config.phone_number || defaultConfig.phone_number],
+        ["address", config.address || defaultConfig.address],
+        ["cta_button", config.cta_button || defaultConfig.cta_button]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    document.getElementById('cta-button').addEventListener('click', () => {
+      const phoneNumber = window.elementSdk?.config?.phone_number || defaultConfig.phone_number;
+      const message = document.createElement('div');
+      message.textContent = `Vui lòng gọi ${phoneNumber} để đặt bàn!`;
+      message.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: ${window.elementSdk?.config?.primary_action_color || defaultConfig.primary_action_color};
+        color: ${window.elementSdk?.config?.surface_color || defaultConfig.surface_color};
+        padding: 24px 48px;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      `;
+      document.body.appendChild(message);
+      setTimeout(() => message.remove(), 3000);
+    });
+  </script>
+ </body>
+</html>
